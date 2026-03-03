@@ -21,8 +21,8 @@ In the notebook, you’ll typically:
 ### Option A: Run locally (recommended)
 1. Clone the repo:
    ```bash
-   git clone https://github.com/thofaa/cosine_similarity_using_tf-idf_approach.git
-   cd cosine_similarity_using_tf-idf_approach
+   git clone https://github.com/thofaa/cosine_similarity_tf-idf_approach.git
+   cd cosine_similarity_tf-idf_approach
    ```
    
 2. Start Jupyter:
