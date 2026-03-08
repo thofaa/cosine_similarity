@@ -1,0 +1,68 @@
+Hidden Markov Models are probabilistic models used to solve real life problems ranging from something everyone thinks about at least once a week — how is the weather going to be like tomorrow? — to hard molecular biology problems, such as predicting peptide binders to the human MHC class II molecule.
+
+Hidden Markov Models are close relatives of Markov Chains, but their hidden states make them a unique tool to use when you’re interested in determining the probability of a sequence of random variables.
+
+In this article we’ll breakdown Hidden Markov Models into all its different components and see, step by step with both the Math and Python code, which emotional states led to your dog’s results in a training exam. We’ll be using the Viterbi Algorithm to determine the probability of observing a specific sequence of observations, and how you can use the Forward Algorithm to determine the likelihood of an observed sequence, when you’re given a sequence of hidden states.
+
+The real world is full of phenomena for which we can see the final outcome, but can’t actually observe the underlying factors that generated those outcomes. One example is predicting the weather, determining if it’s going to be rainy or sunny tomorrow, based on past weather observations and the observed probabilities of the different weather outcomes.
+
+Although driven by factors we can’t observe, with an Hidden Markov Model it’s possible to model these phenomena as probabilistic systems.
+
+Hidden Markov Models, known as HMM for short, are statistical models that work as a sequence of labeling problems. These are the types of problems that describe the evolution of observable events, which themselves, are dependent on internal factors that can’t be directly observed — they are hidden.
+
+An Hidden Markov Model is made of two distinct stochastic processes, meaning those are processes that can be defined as sequences of random variables — variables that depend on random events.
+
+There’s an invisible process and an observable process.
+
+The invisible process is a Markov Chain, like chaining together multiple hidden states that are traversed over time in order to reach an outcome. This is a probabilistic process because all the parameters of the Markov Chain, as well as the score of each sequence, are in fact probabilities.
+
+Hidden Markov Models describe the evolution of observable events, which themselves, are dependent on internal factors that can’t be directly observed — they are hidden.
+
+Just like any other Markov Chain, in order to know which state you’re going next, the only thing that matters is where you are now — in which state of the Markov Chain you’re currently in. None of the previous history of states you’ve been in the past matters to understand where you’re going next.
+
+This kind of short-term memory is one of the key characteristics of HMMs and it’s called the Markov Assumption, indicating that the probability of reaching the next state is only dependent on the probability of the current state.
+
+The other key characteristic of an HMM, is that it also assumes that each observation is only dependent on the state that produced it therefore, being completely independent from any other state in the chain.
+
+The Markov Assumption states that the probability of reaching the next state is only dependent on the probability of the current state.
+
+Today you’re not as worried about the weather forecast, what’s on your mind is that your dog is possibly graduating from their training lessons. After all the time, effort and dog treats involved, all you want is for them to succeed.
+
+During dog training sessions, your four-legged friend is expected to do a few actions or tricks, so the trainer can observe and grade their performance. After combining the scores of three trials, they’ll determine if your dog graduates or needs additional training.
+The trainer only sees the outcome, but there are several factors involved that can’t be directly observed such as, if your dog is tired, happy, if they don’t like the trainer at all or the other dogs around them.
+
+None of these are directly observed, unless there’s undoubtably a specific action your dog does only when they feel a certain way. Would be great if they could express how they feel in words, maybe in the future!
+
+With Hidden Markov Models fresh in your mind, this looks like the perfect opportunity to try to predict how your dog was feeling during the exam. They might get a certain score because they were feeling tired, maybe they were hungry, or they were annoyed at the trainer.
+
+Your dog has been taking lessons for a while and, based on data collected during that training, you have all the building blocks needed to build a Hidden Markov Model.
+
+Hidden States are those non-observable factors that influence the observation sequence. You’ll only consider if your dog is Tired or Happy.
+
+Knowing your dog very well, the non-observable factors that can impact their exam performance are simply being tired or happy.
+
+Next you need to know what’s the probability of going from one state to another, which is captured in a Transition Matrix. This matrix must also be row stochastic meaning that the probabilities from one state to any other state in the chain, each row in the matrix, must sum to one.
+
+Regardless of what type of problem you’re solving for, you always need a Sequence of Observations. Each observation representing the result of traversing the Markov Chain. Each observation is drawn from a specific vocabulary.
+
+In the case of your dog’s exam you observe the score they get after each trial, which can be Fail, OK or Perfect. These are all the possible terms in the observation vocabulary.
+
+You also need the Observation Likelihood Matrix, which is the probability of an observation being generated from a specific state.
+
+Finally, there’s the Initial Probability Distribution. This is the probability that the Markov Chain will start in each specific hidden state.
+
+There can also be some states will never be the starting state in the Markov Chain. In these situations, their initial probability is zero. And just like the probabilities in the Transition Matrix, these sum of all initial probabilities must add up to one.
+
+The Initial Probability Distribution, along with the Transition Matrix and the Observation Likelihood, make up the parameters of an HMM. These are the probabilities you’re figuring out if you have a sequence of observations and hidden states, and attempt to learn which specific HMM could have generated them.
+
+Putting all of these pieces together, this is what the Hidden Markov model that represents your dog’s performance on the training exam.
+
+During the exam, your dog will perform three trials, and graduate only if they don’t Fail in two of those trials.
+
+At the end of the day, if your dog needs more training, you’ll care for them all the same. The big question circling your mind is How are they feeling during the exam.
+
+Imagining a scenario where they graduate with a score of OK — Fail — Perfect exactly in this order, what sequence of emotional states will they be in? Will they be mostly tired, or hungry throughout, or maybe a mix of both?
+
+This type of problem falls right under the category of Decoding problems that HMMs can be applied to. In this case, you’re interested figuring out what’s the best sequence of states that generated a specific sequence of observations, OK — Fail — Perfect.
+
+The problem of decoding the sequence of states that generated a given sequence of observations leverages the Viterbi Algorithm. However, is worth doing a short detour and take a peek into how you could calculate the probability of a given observation sequence — a Likelihood task — using the Forward Algorithm. This will set the stage to better understanding how the Viterbi Algorithm works.
