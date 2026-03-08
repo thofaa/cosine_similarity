@@ -1,44 +1,97 @@
-# Cosine Similarity Using TF‑IDF Approach
+# NLP Playground: Markov Chains and TF‑IDF + Cosine Similarity
 
-This repository demonstrates how to compute **document similarity** using **TF‑IDF vectorization** and **cosine similarity** in a practical, notebook-based workflow.
+This repository is a **mixed NLP playground** that currently contains:
+1) **Markov Chain** based text generation (notebook)  
+2) **TF‑IDF + Cosine Similarity** for document/text similarity (notebook)  
+
+**FURTHER PROJECT (HYBRID-HMM)**
+The longer-term goal is to *connect these ideas* and explore whether we can build a practical pipeline that combines:
+- **sequence modeling** ideas from (Hidden) Markov Models, and
+- **retrieval / similarity** signals from **TF‑IDF + cosine similarity**,  
+to create something like an **HMM + TF-IDF + Cosine similarity**.
+
+---
 
 ## Repository contents
 
-- `cosine_tf_idf.ipynb` — main Jupyter Notebook containing the implementation and examples.
-- `README.md` — project overview (this file).
+- `textgeneration_markovchain.ipynb`  
+  Markov Chain text generation experiments.
 
-## What this project does
+- `cosine_tf_idf.ipynb`  
+  TF‑IDF vectorization + cosine similarity experiments, including comparisons with/without TF‑IDF.
 
-In the notebook, you’ll typically:
-1. Prepare or load a set of text documents.
-2. Convert text into numerical vectors using **TF‑IDF**.
-3. Compute pairwise similarity scores using **cosine similarity**.
-4. Inspect results to find the most similar documents / texts.
-5. Compare the result between cosine similarity value with **TF-IDF** approach and without **TF-IDF** approach.
+- `HMMtext_for_training.txt`  
+  Text data currently stored in the repo (can be used for tokenization/training experiments, especially for markov chain model).
+
+- `README.md`  
+  Project overview (this file).
+
+---
+
+## Project 1 — Markov Chain Text Generation
+
+**What it is:**  
+A classic probabilistic approach to generate text by learning token transition probabilities.
+
+**Typical flow:**
+- preprocess text → tokenize
+- build n-gram transitions (order-1, order-2, etc.)
+- generate text by sampling next tokens from transition distribution
+
+**Why it matters for the bigger goal:**  
+Markov Chains are the stepping stone to **Hidden Markov Models (HMMs)**. HMMs add *hidden states* and an *emission model*, which can help represent “topics/styles/states” underlying observed tokens.
+
+---
+
+## Project 2 — Cosine Similarity with TF‑IDF
+
+**What it is:**  
+A bag-of-words baseline to compare texts using TF‑IDF vectors and cosine similarity.
+
+**Typical flow:**
+- clean text → tokenize
+- build TF, IDF, and TF-IDF matrix
+- calculating weight cosine similarity
+- rank nearest neighbors / similar sentences
+- compare it with no weighted cosine similarity (without TF-IDF approach)
+
+**Why it matters for the bigger goal:**  
+TF‑IDF/cosine can be used as:
+- a **retrieval step** (find candidate similar sentences/segments),
+- a **scoring feature** to choose among candidate generations,
+- a **weak signal** for clustering/initial state assignment for HMM-style modeling.
+
+---
 
 ## How to run
 
-### Option A: Run locally (recommended)
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/thofaa/cosine_similarity_tf-idf_approach.git
-   cd cosine_similarity_tf-idf_approach
-   ```
-   
-2. Start Jupyter:
-   ```bash
-   jupyter notebook
-   ```
+### Option A: Run locally
+```bash
+git clone https://github.com/thofaa/cosine_similarity_tf-idf_approach.git
+cd cosine_similarity_tf-idf_approach
 
-3. Open and run:
-   - `cosine_tf_idf.ipynb`
+# recommended
+python -m venv .venv
+# mac/linux:
+source .venv/bin/activate
+# windows:
+# .venv\Scripts\activate
 
-### Option B: Run in Google Colab
-- Upload `cosine_tf_idf.ipynb` to Colab (or open it from GitHub) and run all cells.
+```
 
-## Notes
+Then open one of:
+- `cosine_tf_idf.ipynb`
+- `textgeneration_markovchain.ipynb`
 
-- TF‑IDF and cosine similarity are widely used for:
-  - near-duplicate detection
-  - document clustering exploration
-  - simple semantic matching / search baselines
+### Option B: Google Colab
+Upload the notebooks to Colab (or open from GitHub) and run all cells.
+
+---
+
+## Notes on “HMM + cosine similarity + TF‑IDF” feasibility
+
+TF‑IDF + cosine similarity isn’t a standard “emission probability” for an HMM (HMMs usually assume emissions are generated from a probability distribution). But it *can still be useful* in a hybrid system as:
+- a retrieval step to choose candidate states/segments,
+- a scoring feature for reranking,
+- a clustering tool to create pseudo-states,
+- or as an additional signal combined with probabilistic components.
