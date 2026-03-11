@@ -8,7 +8,7 @@ This repository is a **mixed NLP playground** that currently contains:
 The longer-term goal is to *connect these ideas* and explore whether we can build a practical pipeline that combines:
 - **sequence modeling** ideas from (Hidden) Markov Models, and
 - **retrieval / similarity** signals from **TF‑IDF + cosine similarity**,  
-to create something like a **hybrid-HMM** -> *HMM + TF-IDF + Cosine similarity**.
+to create something like a **hybrid-HMM** -> *HMM + TF-IDF + Cosine similarity*.
 
 ---
 
